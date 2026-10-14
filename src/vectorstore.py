@@ -1,10 +1,13 @@
 import os
+import pickle
+from typing import Any
+
 import faiss
 import numpy as np
-import pickle
-from typing import List, Any
 from sentence_transformers import SentenceTransformer
+
 from src.embedding import Embeddings
+
 
 class FaissVectorStore:
     def __init__(self, persist_dir: str = "faiss_store", embedding_model: str = "all-MiniLM-L6-v2", chunk_size: int = 1000, chunk_overlap: int = 200):
@@ -18,7 +21,7 @@ class FaissVectorStore:
         self.chunk_overlap = chunk_overlap
         print(f"[INFO] Loaded embedding model: {embedding_model}")
 
-    def build_from_documents(self, documents: List[Any]):
+    def build_from_documents(self, documents: list[Any]):
         print(f"[INFO] Building vector store from {len(documents)} raw documents...")
         emb_pipe = Embeddings(model_name=self.embedding_model, chunk_size=self.chunk_size, chunk_overlap=self.chunk_overlap)
         chunks = emb_pipe.chunk_docs(documents)
@@ -28,7 +31,7 @@ class FaissVectorStore:
         self.save()
         print(f"[INFO] Vector store built and saved to {self.persist_dir}")
 
-    def add_embeddings(self, embeddings: np.ndarray, metadatas: List[Any] | None=None):
+    def add_embeddings(self, embeddings: np.ndarray, metadatas: list[Any] | None=None):
         dim = embeddings.shape[1]
         if self.index is None:
             self.index = faiss.IndexFlatL2(dim)

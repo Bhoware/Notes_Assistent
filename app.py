@@ -1,9 +1,8 @@
-from src.data_loader import load_docs
-from src.embedding import Embeddings
-from src.vectorstore import FaissVectorStore
-from src.search import Search
 from fastapi import FastAPI
 from pydantic import BaseModel
+
+from src.search import Search
+from src.vectorstore import FaissVectorStore
 
 app=FastAPI()
 

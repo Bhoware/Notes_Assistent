@@ -1,9 +1,9 @@
-from typing import List,Any
+from langchain_core.documents import Document
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from sentence_transformers import SentenceTransformer
-from langchain_core.documents import Document
 
 from src.data_loader import load_docs
+
 
 class Embeddings:
     def __init__(self,model_name:str="sentence-transformers/all-MiniLM-L6-v2",chunk_size:int =1000,chunk_overlap:int=200):
@@ -13,7 +13,7 @@ class Embeddings:
         print(f"[INFO] Loaded embedding model:{model_name}")
         print(f"[INFO] Chunk size:{chunk_size}, Chunk overlap:{chunk_overlap}")
         
-    def chunk_docs(self,docs: List[Document]) -> List[Document]:
+    def chunk_docs(self,docs: list[Document]) -> list[Document]:
         """
         Split documents into chunks
         """    
@@ -30,16 +30,16 @@ class Embeddings:
         print(f"[INFO] Split {len(docs)} documents into {len(chunks)} chunks")    
         return chunks
         
-    def embed_texts(self,texts:List[str])->List[List[float]]:
+    def embed_texts(self,texts:list[str])->list[list[float]]:
         """
         Generate embeddings for texts
         """
         print(f"[INFO] Generating embeddings for {len(texts)} texts")
         embeddings=self.model.encode(texts,batch_size=32,show_progress_bar=True,convert_to_numpy=True)
-        print(f"[INFO] Generated embeddings")
+        print("[INFO] Generated embeddings")
         return embeddings.tolist()    
 
-    def embed_docs(self, docs: List[Document]) -> List[List[float]]:
+    def embed_docs(self, docs: list[Document]) -> list[list[float]]:
         """
         Generate embeddings for documents
         """

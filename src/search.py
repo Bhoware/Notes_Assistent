@@ -1,8 +1,10 @@
-from langchain_core.prompts import PromptTemplate
 import os
+
 from dotenv import load_dotenv
-from src.vectorstore import FaissVectorStore
+from langchain_core.prompts import PromptTemplate
 from langchain_groq import ChatGroq
+
+from src.vectorstore import FaissVectorStore
 
 load_dotenv()
 

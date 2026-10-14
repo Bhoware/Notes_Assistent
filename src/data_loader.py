@@ -1,7 +1,8 @@
 from pathlib import Path
-from typing import List,Any
-from langchain_core.documents import Document
-from langchain_community.document_loaders import PyPDFLoader,Docx2txtLoader
+from typing import Any
+
+from langchain_community.document_loaders import PyPDFLoader
+
 
 def load_docs(data_dir:str)->list[Any]:
 
@@ -21,7 +22,7 @@ def load_docs(data_dir:str)->list[Any]:
             loaded_pages = loader.load()
             docs.extend(loaded_pages)
             print(f"Loaded {len(loaded_pages)} pages from {file.name}")
-        except Exception as e:
+        except (OSError, ValueError) as e:
             print(f"Error loading {file}: {e}")
 
     return docs
